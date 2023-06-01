@@ -1,10 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel&family=Inter&family=Raleway&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .drawer-side a.active {
-    color: white;
-  }
-  .drawer-side a {
-    background-color: transparent;
-  }
+  color: white;
+}
+.drawer-side a {
+  background-color: transparent;
+}

@@ -1,9 +1,8 @@
 import { useContext } from "react";
-import { FaShoppingCart } from 'react-icons/fa';
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import useCart from "../../../hooks/useCart";
-
+import { AiOutlineShoppingCart } from "react-icons/ai";
 const NavBar = () => {
     const { user, logOut } = useContext(AuthContext);
     const [cart] = useCart();
@@ -14,31 +13,47 @@ const NavBar = () => {
             .catch(error => console.log(error));
     }
     
-    const navOptions = <>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/menu">Our Menu</Link></li>
-        <li><Link to="/order/salad">Order Food</Link></li>
-        <li><Link to="/secret">Secret</Link></li>
+    const navOptions = (
+      <>
         <li>
-            <Link to="/dashboard/mycart">
-                <button className="btn gap-2">
-                    <FaShoppingCart></FaShoppingCart>
-                    <div className="badge badge-secondary">+{cart?.length || 0}</div>
-                </button>
-            </Link>
+          <Link to="/">Home</Link>
         </li>
-        {
-            user ? <>
-                <button onClick={handleLogOut} className="btn btn-ghost">LogOut</button>
-            </> : <>
-                <li><Link to="/login">Login</Link></li>
-            </>
-        }
-    </>
+        <li>
+          <Link to="/menu">Our Menu</Link>
+        </li>
+        <li>
+          <Link to="/order/salad">Order Food</Link>
+        </li>
+        <li>
+          <Link to="/secret">Secret</Link>
+        </li>
+        <li>
+          <Link to="/dashboard/mycart" className=" text-2xl gap-0">
+            <AiOutlineShoppingCart></AiOutlineShoppingCart>
+            <small className="absolute top-0 right-1 text-white bg-red-800 rounded-full py-0 text-sm px-2">
+              {(cart && cart?.length) || 0}
+            </small>
+          </Link>
+        </li>
+        {user ? (
+          <>
+            <button onClick={handleLogOut} className="btn btn-ghost">
+              LogOut
+            </button>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          </>
+        )}
+      </>
+    );
 
     return (
         <>
-            <div className="navbar fixed z-10 bg-opacity-30 max-w-screen-xl bg-black text-white">
+            <div className="navbar fixed z-10 bg-opacity-30 container bg-black text-white">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
