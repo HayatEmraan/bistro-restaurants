@@ -13,6 +13,7 @@ import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
   const [isAdmin, isLoading] = useAdmin();
+  console.log(isAdmin);
   console.log(isLoading);
   const bistroLogo = (
     <div className="font-cinzel font-extrabold ms-3 mb-8">

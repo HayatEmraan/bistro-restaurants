@@ -10,7 +10,8 @@ const useAdmin = () => {
     queryKey: ["admin", user?.email],
     enabled: !loading,
     queryFn: async () => {
-      const res = await axiosInstance.get("/api/admin/users");
+      const res = await axiosInstance(`/api/users/admin/${user?.email}`);
+      console.log(res.data);
       return res.data;
     },
   });
