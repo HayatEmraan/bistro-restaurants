@@ -51,7 +51,6 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         setUser(currentUser);
         console.log("current user", currentUser);
-        setLoading(false);
         fetch("http://localhost:3000/api/admin/cookies", {
           method: "POST",
           headers: {
@@ -60,7 +59,11 @@ const AuthProvider = ({ children }) => {
           body: JSON.stringify({ email: currentUser.email }),
         })
           .then((res) => res.json())
-          .then((data) => localStorage.setItem("token", data.token));
+          .then((data) => {
+            console.log(data);
+            localStorage.setItem("token", data.token);
+            setLoading(false);
+          });
       }
     });
     return () => {

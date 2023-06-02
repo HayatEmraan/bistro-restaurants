@@ -12,7 +12,6 @@ const NavBar = () => {
             .then(() => { })
             .catch(error => console.log(error));
     }
-    
     const navOptions = (
       <>
         <li>

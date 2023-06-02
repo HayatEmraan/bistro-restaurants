@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { FaGithub, FaGoogle, FaTwitter } from "react-icons/fa";
 import "./authentication.css";
 import authentication from "../../assets/others/authentication2.png";
+import useGogole from "../../hooks/useGoogle";
 const SignUp = () => {
   const {
     register,
@@ -43,17 +44,19 @@ const SignUp = () => {
   const handleGoogle = () => {
     signInWithGoogle().then((result) => {
       const user = result.user;
-      console.log(user);
-      Swal.fire({
-        title: "User Login Successful.",
-        showClass: {
-          popup: "animate__animated animate__fadeInDown",
-        },
-        hideClass: {
-          popup: "animate__animated animate__fadeOutUp",
-        },
-      });
-      navigate("/");
+      if (user) {
+        useGogole(user.displayName, user.email, user.photoURL);
+        Swal.fire({
+          title: "User Login Successful.",
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
+        navigate("/");
+      }
     });
   };
   return (
@@ -63,9 +66,7 @@ const SignUp = () => {
       </Helmet>
       <div className="flex justify-around items-center p-12 authentication">
         <div className="w-1/3">
-          <h2 className="font-inter font-bold text-4xl text-center">
-            Sign Up
-          </h2>
+          <h2 className="font-inter font-bold text-4xl text-center">Sign Up</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <div className="form-control">
               <label className="label">

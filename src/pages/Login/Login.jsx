@@ -12,9 +12,10 @@ import { FaGithub, FaGoogle, FaTwitter } from "react-icons/fa";
 import authentication from "../../assets/others/authentication2.png";
 
 import "./authentication.css";
+import useGogole from "../../hooks/useGoogle";
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
-  const { signIn } = useContext(AuthContext);
+  const { signIn, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -32,7 +33,6 @@ const Login = () => {
     console.log(email, password);
     signIn(email, password).then((result) => {
       const user = result.user;
-      console.log(user);
       Swal.fire({
         title: "User Login Successful.",
         showClass: {
@@ -54,6 +54,24 @@ const Login = () => {
       setDisabled(true);
     }
   };
+  const handleGoogle = () => {
+    signInWithGoogle().then((result) => {
+      const user = result.user;
+      if (user) {
+        useGogole(user.displayName, user.email, user.photoURL);
+        Swal.fire({
+          title: "User Login Successful.",
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
+        navigate("/");
+      }
+    });
+  };
 
   return (
     <>
@@ -62,9 +80,7 @@ const Login = () => {
       </Helmet>
       <div className="flex flex-row-reverse justify-around items-center p-12 authentication">
         <div className="w-1/3">
-          <h2 className="font-inter font-bold text-4xl text-center">
-            LogIn
-          </h2>
+          <h2 className="font-inter font-bold text-4xl text-center">LogIn</h2>
           <form onSubmit={handleLogin} className="card-body">
             <div className="form-control">
               <label className="label">
@@ -122,7 +138,10 @@ const Login = () => {
           </p>
           <div className="divider">Or sign in with</div>
           <div className="flex gap-4 justify-center mb-4">
-            <div className="text-2xl bg-[#F1F2F4] p-1 border bottom-3 border-black rounded-full cursor-pointer">
+            <div
+              onClick={handleGoogle}
+              className="text-2xl bg-[#F1F2F4] p-1 border bottom-3 border-black rounded-full cursor-pointer"
+            >
               <FaGoogle />
             </div>
             <div className="text-2xl bg-[#F1F2F4] p-1 border bottom-3 border-black rounded-full cursor-pointer">
