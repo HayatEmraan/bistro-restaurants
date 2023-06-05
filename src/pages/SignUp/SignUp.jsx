@@ -103,7 +103,7 @@ const SignUp = () => {
               </label>
               <input
                 type="email"
-                {...register("email", { required: true })}
+                {...register("price", { required: true })}
                 name="email"
                 placeholder="Enter here..."
                 className="input input-bordered"

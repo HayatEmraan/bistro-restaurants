@@ -10,9 +10,11 @@ import {
 } from "react-icons/fa";
 import { BiMenuAltLeft, BiShoppingBag, BiSupport } from "react-icons/bi";
 import useAdmin from "../hooks/useAdmin";
+import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
   const [isAdmin, isLoading] = useAdmin();
+  const [data] = useCart();
   console.log(isAdmin);
   console.log(isLoading);
   const bistroLogo = (
@@ -50,13 +52,13 @@ const Dashboard = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/dashboard/add/items">
+                    <Link to="/dashboard/additem">
                       <BiCartAdd />
                       Add Items
                     </Link>
                   </li>
                   <li>
-                    <Link to="/dashboard/manage/items">
+                    <Link to="/dashboard/manageitems">
                       <BiCategory />
                       Manage Items
                     </Link>
@@ -84,7 +86,7 @@ const Dashboard = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/dashboard/reservation">
+                    <Link to="/dashboard/payment">
                       <FaCalendarAlt />
                       Reservation
                     </Link>
@@ -97,8 +99,13 @@ const Dashboard = () => {
                   </li>
                   <li>
                     <Link to="/dashboard/mycart">
-                      <FaShoppingCart />
-                      My Cart
+                      <div className="flex items-center gap-3">
+                        <FaShoppingCart />
+                        My Cart
+                        <small className="text-white bg-red-700 rounded-full px-2 py-0">
+                          {(data && data?.length) || 0}
+                        </small>
+                      </div>
                     </Link>
                   </li>
                   <li>
